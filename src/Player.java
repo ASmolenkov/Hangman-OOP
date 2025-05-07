@@ -1,0 +1,41 @@
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Player {
+
+    private Scanner scanner;
+    private String answer;
+    private int tryCount;
+    private Set <String> enteredLetters;
+
+    public Player(){
+        scanner = new Scanner(System.in);
+        tryCount = 0;
+        enteredLetters = new HashSet<>();
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public int getTryCount() {
+        return tryCount;
+    }
+
+    public Set<String> getEnteredLetters() {
+        return enteredLetters;
+    }
+
+    public void setTryCount() {
+        this.tryCount++;
+    }
+
+    public void playerAnswer() {
+        answer = scanner.nextLine();
+    }
+    public void setEnteredLetters(String answer){
+        enteredLetters.add(answer);
+    }
+}
