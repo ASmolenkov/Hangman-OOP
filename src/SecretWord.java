@@ -3,30 +3,18 @@ import java.util.Random;
 
 public class SecretWord {
 
-    private Dictionary dictionary;
+    private final Dictionary DICTIONARY;
     private String secretWord;
     private StringBuilder wordMask;
     private StringBuilder wordMaskTest;
 
     public SecretWord(){
-        dictionary = new Dictionary();
+        DICTIONARY = new Dictionary();
         wordMaskTest = new StringBuilder();
     }
 
     public String getSecretWord() {
         return secretWord;
-    }
-
-    public void setSecretWord(String secretWord) {
-        this.secretWord = secretWord;
-    }
-
-    public Dictionary getDictionary() {
-        return dictionary;
-    }
-
-    public void setDictionary(Dictionary dictionary) {
-        this.dictionary = dictionary;
     }
 
     public StringBuilder getWordMask() {
@@ -39,7 +27,7 @@ public class SecretWord {
 
     public String guessTheWord(){
         Random random = new Random();
-        List<String> dictionaryListWord = dictionary.getListWord();
+        List<String> dictionaryListWord = DICTIONARY.getListWord();
         this.secretWord = dictionaryListWord.get(random.nextInt(dictionaryListWord.size()));
         maskingWord();
         return secretWord;

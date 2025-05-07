@@ -11,10 +11,7 @@ public class ChecksAnswer {
     }
 
     public static boolean checkFullWord(Player player, SecretWord secretWord){
-         if(player.getAnswer().equalsIgnoreCase(secretWord.getSecretWord())){
-             return true;
-         }
-         return false;
+        return player.getAnswer().equalsIgnoreCase(secretWord.getSecretWord());
     }
 
     public static boolean checkLetterInSecretWord(Player player, SecretWord secretWord){
@@ -27,10 +24,7 @@ public class ChecksAnswer {
     }
 
     public static boolean checkRepeatLetter(Player player){
-        if(player.getEnteredLetters().contains(player.getAnswer())){
-            return true;
-        }
-        return false;
+        return player.getEnteredLetters().contains(player.getAnswer());
     }
 
     public static boolean checkIsEmpty(Player player){
@@ -38,17 +32,11 @@ public class ChecksAnswer {
     }
 
     public static boolean checkIsNumber(Player player){
-        if(player.getAnswer().charAt(0) >= '0' && player.getAnswer().charAt(0) <= '9'){
-            return true;
-        }
-        return false;
+        return player.getAnswer().charAt(0) >= '0' && player.getAnswer().charAt(0) <= '9';
     }
 
     public static boolean checkLength (Player player, SecretWord secretWord){
-        if(player.getAnswer().length() > 1 && player.getAnswer().length() != secretWord.getSecretWord().length()){
-            return true;
-        }
-        return false;
+        return player.getAnswer().length() > 1 && player.getAnswer().length() != secretWord.getSecretWord().length();
     }
     public static boolean checkEnglishLetters(Player player){
         return player.getAnswer().matches(".*[a-zA-Z].*");

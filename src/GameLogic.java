@@ -42,7 +42,6 @@ public class GameLogic {
             }
             else {
                 System.out.println("Ввод не соответствует условию");
-                continue;
             }
         }
     }
@@ -71,6 +70,9 @@ public class GameLogic {
             } else if (ChecksAnswer.checkingForForbiddenChar(player)) {
                 System.out.println("Вы ввели запрещенный символ!");
                 continue;
+            }
+            else if(ChecksAnswer.checkForNumber(player.getAnswer())){
+                System.out.println("Вы ввели цифру, повторите попытку");
             }
             if (player.getAnswer().length() == secretWord.getSecretWord().length()) {
                 if(ChecksAnswer.checkFullWord(player,secretWord)) {

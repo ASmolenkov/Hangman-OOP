@@ -5,13 +5,13 @@ import java.util.Set;
 
 public class Player {
 
-    private Scanner scanner;
+    private final Scanner SCANNER;
     private String answer;
     private int tryCount;
-    private Set <String> enteredLetters;
+    private final Set <String> enteredLetters;
 
     public Player(){
-        scanner = new Scanner(System.in);
+        SCANNER = new Scanner(System.in);
         tryCount = 0;
         enteredLetters = new HashSet<>();
     }
@@ -33,7 +33,7 @@ public class Player {
     }
 
     public void playerAnswer() {
-        answer = scanner.nextLine();
+        answer = SCANNER.nextLine();
     }
     public void setEnteredLetters(String answer){
         enteredLetters.add(answer);
