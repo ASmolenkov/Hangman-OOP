@@ -30,6 +30,9 @@ public class Player {
     public void setTryCount() {
         this.tryCount++;
     }
+    public void setTryCountNull(){
+        this.tryCount = AppConstants.MIN_TRY;
+    }
 
     public void playerAnswer() {
         answer = SCANNER.nextLine();

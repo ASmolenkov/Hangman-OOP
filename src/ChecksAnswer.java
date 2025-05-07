@@ -1,15 +1,6 @@
 public class ChecksAnswer {
 
 
-    public static boolean checkForNumber(String answer) {
-        for (int i = 0; i < answer.length(); i++) {
-            if (answer.charAt(i) >= '0' && answer.charAt(i) <= '9') {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static boolean checkFullWord(Player player, SecretWord secretWord){
         return player.getAnswer().equalsIgnoreCase(secretWord.getSecretWord());
     }
@@ -32,7 +23,7 @@ public class ChecksAnswer {
     }
 
     public static boolean checkIsNumber(Player player){
-        return player.getAnswer().charAt(0) >= '0' && player.getAnswer().charAt(0) <= '9';
+        return player.getAnswer().charAt(0) >= AppConstants.MIN_NUMBER && player.getAnswer().charAt(0) <= AppConstants.MAX_NUMBER;
     }
 
     public static boolean checkLength (Player player, SecretWord secretWord){
@@ -46,8 +37,28 @@ public class ChecksAnswer {
         return player.getAnswer().matches(".*[.,!@#$%^&*].*");
     }
     public static boolean checkIsTryCount(Player player){
-        return player.getTryCount() >= 6;
+        return player.getTryCount() >= AppConstants.MAX_TRY;
     }
+    public static boolean checkingUncorrectedInput(Player player, SecretWord secretWord){
+        if(ChecksAnswer.checkIsEmpty(player)){
+            System.out.println("Вы ничего не ввели, повторите попытку.");
+            return true;
+        } else if (ChecksAnswer.checkIsNumber(player)) {
+            System.out.println("Вы ввели цифру, повторите попытку");
+            return true;
+        }
+        else if(ChecksAnswer.checkLength(player,secretWord)){
+            System.out.println("Некоректный ввод, повторите попытку");
+            return true;
+        } else if (ChecksAnswer.checkEnglishLetters(player)) {
+            System.out.println("Вы должны использовать только русский алфавит!");
+            return true;
+        } else if (ChecksAnswer.checkingForForbiddenChar(player)) {
+            System.out.println("Вы ввели запрещенный символ!");
+            return true;
+        }
 
+        return false;
+    }
 
 }

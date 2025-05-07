@@ -3,10 +3,8 @@ public class GameLogic {
     private static Player player;
     private static HangmanPicture hangmanPicture;
     private static SecretWord secretWord;
-    private static final String STOP = "Стоп";
-    private static final String START = "Старт";
-    private static final String NUMBER_OF_TRY = "Колличество ошибок: ";
-    private static final String ENTERED_LETTER = "Введите букву или слово целиком";
+
+
 
     public GameLogic(){
         player = new Player();
@@ -16,77 +14,53 @@ public class GameLogic {
     }
 
     public void startGame(){
-        while (true){
-            if(!GameLogic.startMenu()){
-                break;
-            }
+        while (GameLogic.startMenu()) {
             secretWord.guessTheWord();
-            System.out.println("Игра начинается");
+            System.out.println(AppConstants.START_GAME);
             GameLogic.beginningGame();
-
-
-
         }
     }
 
     public static boolean startMenu(){
         while (true) {
-            System.out.println("Добро пожаловать в игру \"Виселица\"");
-            System.out.println("Если хотите начать новую игру введите \"Старт\"" + "\n" + "Если хотите выйти введите \"Стоп\"");
+            System.out.println(AppConstants.WELCOME);
+            System.out.println(AppConstants.START_PROMPT);
             player.playerAnswer();
-            if (player.getAnswer().equalsIgnoreCase(START)) {
+            if (player.getAnswer().equalsIgnoreCase(AppConstants.START)) {
                 return true;
-            } else if (player.getAnswer().equalsIgnoreCase(STOP)) {
-                System.out.println("Спасибо за игру");
+            } else if (player.getAnswer().equalsIgnoreCase(AppConstants.STOP)) {
+                System.out.println(AppConstants.THANKS);
                 return false;
             }
             else {
-                System.out.println("Ввод не соответствует условию");
+                System.out.println(AppConstants.INVALID_INPUT);
             }
         }
     }
     public static void beginningGame(){
         while (true) {
-            System.out.println("Вам загадано слово: " + secretWord.getSecretWord());
-            System.out.println("Вам загадано слово: " + secretWord.getWordMask());
-            System.out.println(NUMBER_OF_TRY + player.getTryCount());
-            System.out.println("Вы уже использовали: " + player.getEnteredLetters().toString());
-            hangmanPicture.printHangman(player.getTryCount());
-            System.out.println(ENTERED_LETTER);
+            GameLogic.printGameState(secretWord,player);
+
             player.playerAnswer();
-            if(ChecksAnswer.checkIsEmpty(player)){
-                System.out.println("Вы ничего не ввели, повторите попытку.");
+
+            if(ChecksAnswer.checkingUncorrectedInput(player,secretWord)){
                 continue;
-            } else if (ChecksAnswer.checkIsNumber(player)) {
-                System.out.println("Вы ввели цифру, повторите попытку");
-                continue;
-            }
-            else if(ChecksAnswer.checkLength(player,secretWord)){
-                System.out.println("Некоректный ввод, повторите попытку");
-                continue;
-            } else if (ChecksAnswer.checkEnglishLetters(player)) {
-                System.out.println("Вы должны использовать только русский алфавит!");
-                continue;
-            } else if (ChecksAnswer.checkingForForbiddenChar(player)) {
-                System.out.println("Вы ввели запрещенный символ!");
-                continue;
-            }
-            else if(ChecksAnswer.checkForNumber(player.getAnswer())){
-                System.out.println("Вы ввели цифру, повторите попытку");
             }
             if (player.getAnswer().length() == secretWord.getSecretWord().length()) {
                 if(ChecksAnswer.checkFullWord(player,secretWord)) {
-                    System.out.println("Вы угадали! Поздравляем");
+                    System.out.println(AppConstants.YOU_WIN);
+                    player.getEnteredLetters().clear();
+                    player.setTryCountNull();
                     break;
                 }
                 else {
-                    System.out.println("Вы ошиблись!");
+                    System.out.println(AppConstants.YOU_MISTAKE);
                     player.setTryCount();
                     continue;
                 }
             }
             if(ChecksAnswer.checkRepeatLetter(player)){
-                System.out.println("Вы уже вводили эту букву");
+                System.out.println(AppConstants.REPEAT_INPUT);
                 continue;
             }
 
@@ -96,16 +70,27 @@ public class GameLogic {
 
             }
              else {
-                 System.out.printf("Буквы: \"%s\" в слове нет.\n", player.getAnswer());
+                 System.out.printf(AppConstants.LETTTER_NOT, player.getAnswer());
                     player.setEnteredLetters(player.getAnswer());
                     player.setTryCount();
 
                 }
                 if(ChecksAnswer.checkIsTryCount(player)){
-                    System.out.println("Попытки закончились, вы проиграли");
-                    System.out.println("Загаданное слово: " + secretWord.getSecretWord() + "\n");
+                    System.out.println(AppConstants.YOU_LOOSE);
+                    System.out.println(AppConstants.WORD_SECRET + secretWord.getSecretWord() + "\n");
+                    player.getEnteredLetters().clear();
+                    player.setTryCountNull();
                     break;
                 }
             }
         }
+        public static void printGameState(SecretWord secretWord, Player player){
+            System.out.println(AppConstants.WORD_SECRET + secretWord.getSecretWord());
+            System.out.println(AppConstants.WORD_SECRET + secretWord.getWordMask());
+            System.out.println(AppConstants.NUMBER_OF_TRY + player.getTryCount());
+            System.out.println(AppConstants.ALREADY_USED + player.getEnteredLetters().toString());
+            hangmanPicture.printHangman(player.getTryCount());
+            System.out.println(AppConstants.ENTERED_LETTER);
+        }
+
     }
