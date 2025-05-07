@@ -6,11 +6,11 @@ public class SecretWord {
     private final Dictionary DICTIONARY;
     private String secretWord;
     private StringBuilder wordMask;
-    private StringBuilder wordMaskTest;
+
 
     public SecretWord(){
         DICTIONARY = new Dictionary();
-        wordMaskTest = new StringBuilder();
+
     }
 
     public String getSecretWord() {
@@ -19,10 +19,6 @@ public class SecretWord {
 
     public StringBuilder getWordMask() {
         return wordMask;
-    }
-
-    public StringBuilder getWordMaskTest() {
-        return wordMaskTest;
     }
 
     public String guessTheWord(){
@@ -35,7 +31,7 @@ public class SecretWord {
     public void maskingWord (){
         String CHAR_MASK = "■";
         wordMask = new StringBuilder(CHAR_MASK.repeat(secretWord.length()));
-        wordMaskTest = wordMask;
+
     }
 
     public void letterReplacement(Player player){
