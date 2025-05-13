@@ -1,18 +1,16 @@
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Player {
 
-    private final Scanner SCANNER;
+    private final Scanner scanner;
     private String answer;
     private int tryCount;
-    private final Set <String> enteredLetters;
+    private final List <String> enteredLetters;
 
     public Player(){
-        SCANNER = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         tryCount = 0;
-        enteredLetters = new HashSet<>();
+        enteredLetters = new ArrayList<>();
     }
 
     public String getAnswer() {
@@ -23,19 +21,19 @@ public class Player {
         return tryCount;
     }
 
-    public Set<String> getEnteredLetters() {
+    public List<String> getEnteredLetters() {
         return enteredLetters;
     }
 
     public void setTryCount() {
         this.tryCount++;
     }
-    public void setTryCountNull(){
-        this.tryCount = AppConstants.MIN_TRY;
+    public void resetTryCount(){
+        this.tryCount = Constants.MIN_TRY;
     }
 
     public void playerAnswer() {
-        answer = SCANNER.nextLine();
+        answer = scanner.nextLine().toLowerCase();
     }
     public void setEnteredLetters(String answer){
         enteredLetters.add(answer);

@@ -1,4 +1,4 @@
-public class ChecksAnswer {
+public final class ChecksAnswer {
 
 
     public static boolean checkFullWord(Player player, SecretWord secretWord){
@@ -23,7 +23,7 @@ public class ChecksAnswer {
     }
 
     public static boolean checkIsNumber(Player player){
-        return player.getAnswer().charAt(0) >= AppConstants.MIN_NUMBER && player.getAnswer().charAt(0) <= AppConstants.MAX_NUMBER;
+        return player.getAnswer().charAt(0) >= Constants.MIN_NUMBER && player.getAnswer().charAt(0) <= Constants.MAX_NUMBER;
     }
 
     public static boolean checkLength (Player player, SecretWord secretWord){
@@ -34,10 +34,10 @@ public class ChecksAnswer {
     }
 
     public static boolean checkingForForbiddenChar(Player player){
-        return player.getAnswer().matches(".*[.,!@#$%^&*].*");
+        return player.getAnswer().matches(".*[.,!@#$%^&*:;].*");
     }
     public static boolean checkIsTryCount(Player player){
-        return player.getTryCount() >= AppConstants.MAX_TRY;
+        return player.getTryCount() >= Constants.MAX_TRY;
     }
     public static boolean checkingUncorrectedInput(Player player, SecretWord secretWord){
         if(ChecksAnswer.checkIsEmpty(player)){
@@ -55,6 +55,9 @@ public class ChecksAnswer {
             return true;
         } else if (ChecksAnswer.checkingForForbiddenChar(player)) {
             System.out.println("Вы ввели запрещенный символ!");
+            return true;
+        } else if (ChecksAnswer.checkRepeatLetter(player)) {
+            System.out.println(Constants.REPEAT_INPUT);
             return true;
         }
 

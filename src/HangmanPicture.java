@@ -1,10 +1,7 @@
 public class HangmanPicture {
 
-    String[] hangmanPicture;
-
-    public HangmanPicture(){
-        hangmanPicture = new String[]{
-                """
+    String[] hangmanPicture = new String[]{
+            """
   +---+
   |   |
       |
@@ -19,7 +16,7 @@ public class HangmanPicture {
       |
       |
 =========""",
-                """
+            """
   +---+
   |   |
   O   |
@@ -27,7 +24,7 @@ public class HangmanPicture {
       |
       |
 =========""",
-                """
+            """
   +---+
   |   |
   O   |
@@ -36,7 +33,7 @@ public class HangmanPicture {
       |
 =========""",
 
-                """
+            """
   +---+
   |   |
   O   |
@@ -44,7 +41,7 @@ public class HangmanPicture {
       |
       |
 =========""",
-                """
+            """
   +---+
   |   |
   O   |
@@ -52,7 +49,7 @@ public class HangmanPicture {
  /    |
       |
 =========""",
-                """
+            """
   +---+
   |   |
   O   |
@@ -60,12 +57,8 @@ public class HangmanPicture {
  / \\  |
       |
 ========="""
-        };
-    }
+    };
 
-    public String[] getHangmanPicture() {
-        return hangmanPicture;
-    }
     public void printHangman(int tryCount){
         System.out.println(hangmanPicture[tryCount]);
     }

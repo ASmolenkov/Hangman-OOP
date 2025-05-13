@@ -1,4 +1,4 @@
-public class AppConstants {
+public class Constants {
     public static final String STOP = "Стоп";
     public static final String START = "Старт";
     public static final String START_GAME = "Игра начинается";
@@ -6,13 +6,13 @@ public class AppConstants {
     public static final String ENTERED_LETTER = "Введите букву или слово целиком";
     public static final String WORD_SECRET = "Вам загадано слово: ";
     public static final String WELCOME = "Добро пожаловать в игру \"Виселица\"";
-    public static final String START_PROMPT = "Если хотите начать новую игру введите \"Старт\"" + "\n" + "Если хотите выйти введите \"Стоп\"";
+    public static final String START_PROMPT = "Если хотите начать новую игру введите '%s'  %nЕсли хотите выйти введите '%s'".formatted(START, STOP);
     public static final String THANKS = "Спасибо за игру";
     public static final String INVALID_INPUT = "Ввод не соответствует условию";
     public static final String YOU_WIN = "Вы угадали! Поздравляем";
     public static final String YOU_MISTAKE = "Вы ошиблись!";
     public static final String REPEAT_INPUT = "Вы уже вводили эту букву";
-    public static final String LETTTER_NOT = "Буквы: \"%s\" в слове нет.\n";
+    public static final String TEMPLATE_LETTER_NOT = "Буквы: \"%s\" в слове нет.\n";
     public static final String ALREADY_USED = "Вы уже использовали: ";
     public static final String YOU_LOOSE = "Попытки закончились, вы проиграли! ";
 
@@ -27,5 +27,5 @@ public class AppConstants {
 
 
 
-    private AppConstants(){}
+    private Constants(){}
 }

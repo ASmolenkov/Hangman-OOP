@@ -1,96 +1,113 @@
+
+import java.util.Random;
+
 public class GameLogic {
 
-    private static Player player;
-    private static HangmanPicture hangmanPicture;
-    private static SecretWord secretWord;
+    private final Player player;
+    private final HangmanPicture hangmanPicture;
+    private SecretWord secretWord;
+    private Random random;
+    private final Dictionary dictionary;
 
 
 
     public GameLogic(){
+        random = new Random();
         player = new Player();
         hangmanPicture = new HangmanPicture();
-        secretWord = new SecretWord();
-        Dictionary dictionary = new Dictionary();
+        dictionary = new Dictionary();
+
     }
 
     public void startGame(){
-        while (GameLogic.startMenu()) {
-            secretWord.guessTheWord();
-            System.out.println(AppConstants.START_GAME);
-            GameLogic.beginningGame();
+        while (startMenu()) {
+            System.out.println(Constants.START_GAME);
+            beginningGame();
         }
     }
 
-    public static boolean startMenu(){
+    private boolean startMenu(){
         while (true) {
-            System.out.println(AppConstants.WELCOME);
-            System.out.println(AppConstants.START_PROMPT);
+
+            System.out.println(Constants.WELCOME);
+            System.out.println(Constants.START_PROMPT);
             player.playerAnswer();
-            if (player.getAnswer().equalsIgnoreCase(AppConstants.START)) {
+            if (player.getAnswer().equalsIgnoreCase(Constants.START)) {
+                player.getEnteredLetters().clear();
+                player.resetTryCount();
+                secretWord = new SecretWord(dictionary.getListWord().get(random.nextInt(dictionary.getListWord().size())));
+                secretWord.maskingWord();
                 return true;
-            } else if (player.getAnswer().equalsIgnoreCase(AppConstants.STOP)) {
-                System.out.println(AppConstants.THANKS);
+            } else if (player.getAnswer().equalsIgnoreCase(Constants.STOP)) {
+                System.out.println(Constants.THANKS);
                 return false;
             }
-            else {
-                System.out.println(AppConstants.INVALID_INPUT);
-            }
+
+            System.out.println(Constants.INVALID_INPUT);
+
         }
     }
-    public static void beginningGame(){
+    private void beginningGame(){
+        player.getEnteredLetters().clear();
+        player.resetTryCount();
         while (true) {
-            GameLogic.printGameState(secretWord,player);
-
+            printGameState(secretWord,player);
             player.playerAnswer();
-
             if(ChecksAnswer.checkingUncorrectedInput(player,secretWord)){
                 continue;
             }
             if (player.getAnswer().length() == secretWord.getSecretWord().length()) {
                 if(ChecksAnswer.checkFullWord(player,secretWord)) {
-                    System.out.println(AppConstants.YOU_WIN);
-                    player.getEnteredLetters().clear();
-                    player.setTryCountNull();
+                    System.out.println(Constants.YOU_WIN);
                     break;
                 }
                 else {
-                    System.out.println(AppConstants.YOU_MISTAKE);
+                    System.out.println(Constants.YOU_MISTAKE);
                     player.setTryCount();
+                    player.setEnteredLetters(player.getAnswer());
                     continue;
                 }
             }
-            if(ChecksAnswer.checkRepeatLetter(player)){
-                System.out.println(AppConstants.REPEAT_INPUT);
-                continue;
-            }
-
-             if (ChecksAnswer.checkLetterInSecretWord(player, secretWord)) {
-                secretWord.letterReplacement(player);
-                player.setEnteredLetters(player.getAnswer());
-
-            }
-             else {
-                 System.out.printf(AppConstants.LETTTER_NOT, player.getAnswer());
-                    player.setEnteredLetters(player.getAnswer());
-                    player.setTryCount();
-
-                }
+                workingWithInput();
                 if(ChecksAnswer.checkIsTryCount(player)){
-                    System.out.println(AppConstants.YOU_LOOSE);
-                    System.out.println(AppConstants.WORD_SECRET + secretWord.getSecretWord() + "\n");
-                    player.getEnteredLetters().clear();
-                    player.setTryCountNull();
+                    isLose();
+                    break;
+                }
+                if(theMaskIsEmpty(secretWord.getWordMask())){
+                    System.out.println(Constants.YOU_WIN);
                     break;
                 }
             }
         }
-        public static void printGameState(SecretWord secretWord, Player player){
-            System.out.println(AppConstants.WORD_SECRET + secretWord.getSecretWord());
-            System.out.println(AppConstants.WORD_SECRET + secretWord.getWordMask());
-            System.out.println(AppConstants.NUMBER_OF_TRY + player.getTryCount());
-            System.out.println(AppConstants.ALREADY_USED + player.getEnteredLetters().toString());
+        private void printGameState(SecretWord secretWord, Player player){
+            System.out.println(Constants.WORD_SECRET + secretWord.getSecretWord());
+            System.out.println(Constants.WORD_SECRET + secretWord.getWordMask());
+            System.out.println(Constants.NUMBER_OF_TRY + player.getTryCount());
+            System.out.println(Constants.ALREADY_USED + player.getEnteredLetters().toString());
             hangmanPicture.printHangman(player.getTryCount());
-            System.out.println(AppConstants.ENTERED_LETTER);
+            System.out.println(Constants.ENTERED_LETTER);
         }
+
+        private boolean theMaskIsEmpty(StringBuilder maskWord){
+            return !maskWord.toString().contains(secretWord.getCHAR_MASK());
+        }
+
+        private void workingWithInput(){
+            if (ChecksAnswer.checkLetterInSecretWord(player, secretWord)) {
+                secretWord.letterReplacement(player.getAnswer().charAt(0));
+                player.setEnteredLetters(player.getAnswer());
+            }
+            else {
+                System.out.printf(Constants.TEMPLATE_LETTER_NOT, player.getAnswer());
+                player.setEnteredLetters(player.getAnswer());
+                player.setTryCount();
+            }
+        }
+        private void isLose(){
+            hangmanPicture.printHangman(player.getTryCount());
+            System.out.println(Constants.YOU_LOOSE);
+            System.out.println(Constants.WORD_SECRET + secretWord.getSecretWord() + "\n");
+        }
+
 
     }

@@ -1,43 +1,37 @@
-import java.util.List;
-import java.util.Random;
 
 public class SecretWord {
 
-    private final Dictionary DICTIONARY;
-    private String secretWord;
+
+    private String text;
     private StringBuilder wordMask;
+    private final String CHAR_MASK = "■";
 
 
-    public SecretWord(){
-        DICTIONARY = new Dictionary();
-
+    public SecretWord(String text){
+        this.text = text;
     }
 
     public String getSecretWord() {
-        return secretWord;
+        return text;
     }
 
     public StringBuilder getWordMask() {
         return wordMask;
     }
 
-    public String guessTheWord(){
-        Random random = new Random();
-        List<String> dictionaryListWord = DICTIONARY.getListWord();
-        this.secretWord = dictionaryListWord.get(random.nextInt(dictionaryListWord.size()));
-        maskingWord();
-        return secretWord;
+    public String getCHAR_MASK() {
+        return CHAR_MASK;
     }
+
     public void maskingWord (){
-        String CHAR_MASK = "■";
-        wordMask = new StringBuilder(CHAR_MASK.repeat(secretWord.length()));
+        wordMask = new StringBuilder(CHAR_MASK.repeat(text.length()));
 
     }
 
-    public void letterReplacement(Player player){
-        for (int i = 0; i < secretWord.length(); i++) {
-            if(player.getAnswer().charAt(0) == secretWord.charAt(i)){
-                wordMask.setCharAt(i,player.getAnswer().charAt(0));
+    public void letterReplacement(char letter){
+        for (int i = 0; i < text.length(); i++) {
+            if(text.charAt(i) == letter){
+                wordMask.setCharAt(i,letter);
 
             }
         }
