@@ -79,8 +79,7 @@ public class GameLogic {
                 }
             }
         }
-        private void printGameState(SecretWord secretWord, Player player){
-            System.out.println(Constants.WORD_SECRET + secretWord.getSecretWord());
+         void printGameState(SecretWord secretWord, Player player){
             System.out.println(Constants.WORD_SECRET + secretWord.getWordMask());
             System.out.println(Constants.NUMBER_OF_TRY + player.getTryCount());
             System.out.println(Constants.ALREADY_USED + player.getEnteredLetters().toString());
