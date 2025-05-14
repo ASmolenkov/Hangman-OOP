@@ -10,15 +10,16 @@ public class Dictionary {
     private  List<String> listWord;
 
 
-    public Dictionary(){
+    public Dictionary(String path){
+
         try {
-            listWord = Files.readAllLines(Paths.get("dictionary"));
+            listWord = Files.readAllLines(Paths.get(path));
         } catch (IOException e) {
             System.out.println("Файл со словарем не найден!");
         }
     }
 
-    public  List<String> getListWord() {
+    public  List<String> getWords() {
         return listWord;
     }
 

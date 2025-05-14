@@ -36,8 +36,8 @@ public final class ChecksAnswer {
     public static boolean checkingForForbiddenChar(Player player){
         return player.getAnswer().matches(".*[.,!@#$%^&*:;].*");
     }
-    public static boolean checkIsTryCount(Player player){
-        return player.getTryCount() >= Constants.MAX_TRY;
+    public static boolean isMaxError(int errorCount){
+        return errorCount >= Constants.MAX_TRY;
     }
     public static boolean checkingUncorrectedInput(Player player, SecretWord secretWord){
         if(ChecksAnswer.checkIsEmpty(player)){

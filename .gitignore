@@ -30,3 +30,5 @@ bin/
 .idea
 *.iml
 src/TestHungman.java
+src/TestHungman2.java
+src/dictionary_test

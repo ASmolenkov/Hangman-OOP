@@ -11,11 +11,11 @@ public class GameLogic {
 
 
 
-    public GameLogic(){
+    public GameLogic(Dictionary dictionary){
         random = new Random();
         player = new Player();
         hangmanPicture = new HangmanPicture();
-        dictionary = new Dictionary();
+        this.dictionary = dictionary;
 
     }
 
@@ -35,17 +35,20 @@ public class GameLogic {
             if (player.getAnswer().equalsIgnoreCase(Constants.START)) {
                 player.getEnteredLetters().clear();
                 player.resetTryCount();
-                secretWord = new SecretWord(dictionary.getListWord().get(random.nextInt(dictionary.getListWord().size())));
-                secretWord.maskingWord();
+                createSecretWord();
                 return true;
             } else if (player.getAnswer().equalsIgnoreCase(Constants.STOP)) {
                 System.out.println(Constants.THANKS);
                 return false;
             }
-
             System.out.println(Constants.INVALID_INPUT);
-
         }
+
+    }
+    private void createSecretWord(){
+        int wordIndex = random.nextInt(dictionary.getWords().size());
+        String text = dictionary.getWords().get(wordIndex);
+        secretWord = new SecretWord(text);
     }
     private void beginningGame(){
         player.getEnteredLetters().clear();
@@ -56,7 +59,8 @@ public class GameLogic {
             if(ChecksAnswer.checkingUncorrectedInput(player,secretWord)){
                 continue;
             }
-            if (player.getAnswer().length() == secretWord.getSecretWord().length()) {
+            String answer = player.getAnswer();
+            if (isLengthEqualsSecretWordLength(answer)) {
                 if(ChecksAnswer.checkFullWord(player,secretWord)) {
                     System.out.println(Constants.YOU_WIN);
                     break;
@@ -69,17 +73,17 @@ public class GameLogic {
                 }
             }
                 workingWithInput();
-                if(ChecksAnswer.checkIsTryCount(player)){
+                if(ChecksAnswer.isMaxError(player.getTryCount())){
                     isLose();
                     break;
                 }
-                if(theMaskIsEmpty(secretWord.getWordMask())){
+                if(isMaskEmpty(secretWord.getWordMask())){
                     System.out.println(Constants.YOU_WIN);
                     break;
                 }
             }
         }
-         void printGameState(SecretWord secretWord, Player player){
+        protected void printGameState(SecretWord secretWord, Player player){
             System.out.println(Constants.WORD_SECRET + secretWord.getWordMask());
             System.out.println(Constants.NUMBER_OF_TRY + player.getTryCount());
             System.out.println(Constants.ALREADY_USED + player.getEnteredLetters().toString());
@@ -87,8 +91,8 @@ public class GameLogic {
             System.out.println(Constants.ENTERED_LETTER);
         }
 
-        private boolean theMaskIsEmpty(StringBuilder maskWord){
-            return !maskWord.toString().contains(secretWord.getCHAR_MASK());
+        private boolean isMaskEmpty(StringBuilder maskWord){
+            return !maskWord.toString().contains(secretWord.getMaskSymbol());
         }
 
         private void workingWithInput(){
@@ -106,6 +110,9 @@ public class GameLogic {
             hangmanPicture.printHangman(player.getTryCount());
             System.out.println(Constants.YOU_LOOSE);
             System.out.println(Constants.WORD_SECRET + secretWord.getSecretWord() + "\n");
+        }
+        private boolean isLengthEqualsSecretWordLength(String s){
+           return s.length() == secretWord.getSecretWord().length();
         }
 
 

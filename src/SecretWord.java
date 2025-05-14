@@ -4,11 +4,12 @@ public class SecretWord {
 
     private String text;
     private StringBuilder wordMask;
-    private final String CHAR_MASK = "■";
+    private static final String MASK_SYMBOL = "■";
 
 
     public SecretWord(String text){
         this.text = text;
+        createMask();
     }
 
     public String getSecretWord() {
@@ -19,12 +20,12 @@ public class SecretWord {
         return wordMask;
     }
 
-    public String getCHAR_MASK() {
-        return CHAR_MASK;
+    public String getMaskSymbol() {
+        return MASK_SYMBOL;
     }
 
-    public void maskingWord (){
-        wordMask = new StringBuilder(CHAR_MASK.repeat(text.length()));
+    private void createMask(){
+        wordMask = new StringBuilder(MASK_SYMBOL.repeat(text.length()));
 
     }
 

@@ -1,6 +1,7 @@
 public class Hangman {
     public static void main(String[] args) {
-        GameLogic gameLogic = new GameLogic();
+        Dictionary dictionary = new Dictionary("dictionary");
+        GameLogic gameLogic = new GameLogic(dictionary);
         gameLogic.startGame();
     }
 }
