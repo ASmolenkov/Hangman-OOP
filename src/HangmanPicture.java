@@ -1,6 +1,6 @@
 public class HangmanPicture {
 
-    String[] hangmanPicture = new String[]{
+    private static final String[] HANGMAN_PICTURE = new String[]{
             """
   +---+
   |   |
@@ -59,8 +59,10 @@ public class HangmanPicture {
 ========="""
     };
 
+
+
     public void printHangman(int tryCount){
-        System.out.println(hangmanPicture[tryCount]);
+        System.out.println(HangmanPicture.HANGMAN_PICTURE[tryCount]);
     }
 
 }

@@ -28,7 +28,6 @@ public class GameLogic {
 
     private boolean startMenu(){
         while (true) {
-
             System.out.println(Constants.WELCOME);
             System.out.println(Constants.START_PROMPT);
             player.playerAnswer();
@@ -56,12 +55,12 @@ public class GameLogic {
         while (true) {
             printGameState(secretWord,player);
             player.playerAnswer();
-            if(ChecksAnswer.checkingUncorrectedInput(player,secretWord)){
+            if(ChecksAnswer.checkingUncorrectedInput(player.getAnswer(),secretWord.getText(),player.getEnteredLetters())){
                 continue;
             }
             String answer = player.getAnswer();
             if (isLengthEqualsSecretWordLength(answer)) {
-                if(ChecksAnswer.checkFullWord(player,secretWord)) {
+                if(ChecksAnswer.checkFullWord(player.getAnswer(),secretWord.getText())) {
                     System.out.println(Constants.YOU_WIN);
                     break;
                 }
@@ -83,6 +82,7 @@ public class GameLogic {
                 }
             }
         }
+
         protected void printGameState(SecretWord secretWord, Player player){
             System.out.println(Constants.WORD_SECRET + secretWord.getWordMask());
             System.out.println(Constants.NUMBER_OF_TRY + player.getTryCount());
@@ -96,7 +96,7 @@ public class GameLogic {
         }
 
         private void workingWithInput(){
-            if (ChecksAnswer.checkLetterInSecretWord(player, secretWord)) {
+            if (ChecksAnswer.checkLetterInSecretWord(player.getAnswer(), secretWord.getText())) {
                 secretWord.letterReplacement(player.getAnswer().charAt(0));
                 player.setEnteredLetters(player.getAnswer());
             }
@@ -109,11 +109,13 @@ public class GameLogic {
         private void isLose(){
             hangmanPicture.printHangman(player.getTryCount());
             System.out.println(Constants.YOU_LOOSE);
-            System.out.println(Constants.WORD_SECRET + secretWord.getSecretWord() + "\n");
+            System.out.println(Constants.WORD_SECRET + secretWord.getText() + "\n");
         }
         private boolean isLengthEqualsSecretWordLength(String s){
-           return s.length() == secretWord.getSecretWord().length();
+           return s.length() == secretWord.getText().length();
         }
+
+
 
 
     }

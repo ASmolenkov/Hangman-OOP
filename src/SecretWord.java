@@ -12,7 +12,7 @@ public class SecretWord {
         createMask();
     }
 
-    public String getSecretWord() {
+    public String getText() {
         return text;
     }
 
