@@ -15,6 +15,11 @@ public class Constants {
     public static final String TEMPLATE_LETTER_NOT = "Буквы: \"%s\" в слове нет.\n";
     public static final String ALREADY_USED = "Вы уже использовали: ";
     public static final String YOU_LOOSE = "Попытки закончились, вы проиграли! ";
+    public static final String EASY_LEVEL = "Легкая";
+    public static final String MEDIUM_LEVEL = "Средняя";
+    public static final String HARD_LEVEL = "Трудная";
+
+    public static final String SELECT_DIFFICULTY_TEMPLATE = "Выберете сложность игры: \n 1 - %s \n 2 - %s \n 3 - %s".formatted(EASY_LEVEL,MEDIUM_LEVEL,HARD_LEVEL);
 
     // Константы int
 

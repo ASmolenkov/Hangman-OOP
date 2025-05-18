@@ -65,5 +65,12 @@ public final class ChecksAnswer {
 
         return false;
     }
+    public static boolean isDifficultyValid(String userInput){
+        try {
+            return Integer.parseInt(userInput) >= 1 && Integer.parseInt(userInput) <= 3;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
 }

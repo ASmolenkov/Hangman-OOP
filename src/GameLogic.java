@@ -30,11 +30,12 @@ public class GameLogic {
         while (true) {
             System.out.println(Constants.WELCOME);
             System.out.println(Constants.START_PROMPT);
-            player.playerAnswer();
+            player.inputAnswer();
             if (player.getAnswer().equalsIgnoreCase(Constants.START)) {
                 player.getEnteredLetters().clear();
                 player.resetTryCount();
-                createSecretWord();
+                //
+                createSecretWord(requestDifficulty());
                 return true;
             } else if (player.getAnswer().equalsIgnoreCase(Constants.STOP)) {
                 System.out.println(Constants.THANKS);
@@ -44,17 +45,27 @@ public class GameLogic {
         }
 
     }
-    private void createSecretWord(){
-        int wordIndex = random.nextInt(dictionary.getWords().size());
-        String text = dictionary.getWords().get(wordIndex);
-        secretWord = new SecretWord(text);
+    private void createSecretWord(int difficultyLevel){
+        if(difficultyLevel == 1){
+            int wordIndex = random.nextInt(dictionary.getEasyWord().size());
+            String text = dictionary.getEasyWord().get(wordIndex);
+            secretWord = new SecretWord(text);
+        } else if (difficultyLevel == 2) {
+            int wordIndex = random.nextInt(dictionary.getMediumWord().size());
+            String text = dictionary.getMediumWord().get(wordIndex);
+            secretWord = new SecretWord(text);
+        } else if (difficultyLevel == 3) {
+            int wordIndex = random.nextInt(dictionary.getHardWord().size());
+            String text = dictionary.getHardWord().get(wordIndex);
+            secretWord = new SecretWord(text);
+        }
     }
     private void beginningGame(){
         player.getEnteredLetters().clear();
         player.resetTryCount();
         while (true) {
             printGameState(secretWord,player);
-            player.playerAnswer();
+            player.inputAnswer();
             if(ChecksAnswer.checkingUncorrectedInput(player.getAnswer(),secretWord.getText(),player.getEnteredLetters())){
                 continue;
             }
@@ -81,6 +92,23 @@ public class GameLogic {
                     break;
                 }
             }
+        }
+        private int requestDifficulty(){
+               while (true){
+                   System.out.println(Constants.SELECT_DIFFICULTY_TEMPLATE);
+                   player.inputAnswer();
+                   if(ChecksAnswer.checkIsEmpty(player.getAnswer())){
+                       continue;
+                   }
+                   if(ChecksAnswer.isDifficultyValid(player.getAnswer())){
+                       return Integer.parseInt(player.getAnswer());
+                   }
+                   else {
+                       System.out.println(Constants.INVALID_INPUT);
+                   }
+
+               }
+
         }
 
         protected void printGameState(SecretWord secretWord, Player player){

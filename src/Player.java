@@ -32,7 +32,7 @@ public class Player {
         this.tryCount = Constants.MIN_TRY;
     }
 
-    public void playerAnswer() {
+    public void inputAnswer() {
         answer = scanner.nextLine().toLowerCase();
     }
     public void setEnteredLetters(String answer){
